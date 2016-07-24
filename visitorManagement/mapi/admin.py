@@ -34,7 +34,7 @@ class VisitorAdmin(admin.ModelAdmin):
 
 
 class WorkBookTypeAdmin(admin.ModelAdmin):
-    form = WorkBookTypeAdminForm
+    #form = WorkBookTypeAdminForm
     list_display = ('type', 'mandatory_fields')
 
     def get_actions(self, request):

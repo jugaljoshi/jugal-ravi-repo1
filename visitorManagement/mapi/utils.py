@@ -5,7 +5,8 @@ import json
 import base64
 import hmac
 import functools
-from visitorManagement.mapi.models import Visitor
+import logging
+from django.conf import settings
 
 
 class MapiErrorCodeDescriptor(object):
@@ -101,6 +102,7 @@ def render_error_response(mapi_error_code, message=None, response=None):
 
 
 def get_visitor_all_fields():
+    from visitorManagement.mapi.models import Visitor
     visitor_fields = Visitor._meta.get_all_field_names()
 
     # remove foreign key fields
@@ -108,3 +110,23 @@ def get_visitor_all_fields():
     visitor_fields.remove('workbook_id')
     visitor_fields.remove('id')
     return visitor_fields
+
+
+def save_image_to_s3(key, file_name):
+    key.key = 'media/%s' % file_name.name
+    key.set_contents_from_file(file_name)
+    logging.debug("Image from S3 : %s" % key.key)
+
+
+def get_base_image_url(protocol='http'):
+    is_using_s3 = getattr(settings, 'MEDIA_FROM_S3', None)
+    if is_using_s3:
+        base_url = settings.MEDIA_URL
+    else:
+        base_url = settings.UPLOAD_DIR
+    if base_url.startswith('//'):
+        base_url = "%s:%s" % (protocol, base_url)
+
+    if not base_url.endswith("/"):
+        base_url = "%s/" % base_url
+    return base_url

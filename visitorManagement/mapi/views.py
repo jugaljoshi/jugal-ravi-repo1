@@ -2,7 +2,8 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpRequest, HttpRe
 import simplejson
 import json
 from django.views.generic import View, TemplateView
-from visitorManagement.mapi.utils import MapiErrorCodes, JSONResponse, mapi_mandatory_parameters, get_visitor_all_fields
+from visitorManagement.mapi.utils import MapiErrorCodes, JSONResponse, mapi_mandatory_parameters, get_visitor_all_fields, \
+    get_base_image_url
 from django.conf import settings
 import logging
 from visitorManagement.mapi.models import Member, Visitor, WorkBookType, WorkBook
@@ -127,31 +128,36 @@ class VisitorView(BaseMapiView):
 
     TIME_FORMAT = '%Y%m%d %H:%M:%S'
 
-    @method_decorator(mapi_mandatory_parameters('wb_type'))
+    @method_decorator(mapi_mandatory_parameters('wb_type_id'))
     def get(self, request):
         member = request.user
-        workbook_type = WorkBookType.objects.get_list_or_404(type=request.GET['wb_type'])
+        #member = get_object_or_404(Member, id=1) # todo remove this
 
-        workbook_field_options = workbook_type.field_options
+        workbook_type = get_object_or_404(WorkBookType, id=request.GET['wb_type_id'])
+        workbook_field_options = workbook_type.mandatory_fields
         workbook_field_options_list = workbook_field_options.split(',')
-        workbook = WorkBook.objects.get_list_or_404(member=member, wb_type=workbook_type)
+        workbook = get_object_or_404(WorkBook, member=member, wb_type=workbook_type)
         if not workbook:
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'Workbook does\'t exits for given type')
-        visitors = Visitor.objects.filter(workbook=workbook)
+
+        visitors = Visitor.object.get_all_active_visitor(workbook)
+
         if not visitors:
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'No visitors for given workbook')
         response = []
-        visitor_field = Visitor._meta.get_all_field_names()
+        visitor_field = Visitor.object.get_all_field_names()  # get_visitor_all_fields()
         needed_fields = set(visitor_field).intersection(workbook_field_options_list)
         for visitor in visitors:
-            if not visitor.is_live:
-                continue
             d = dict()
             while needed_fields:
-                field = needed_fields.pop()
-                d.update({str(field): visitor.field})
+                field_name = needed_fields.pop()
+                field_value = visitor[field_name]
+                if isinstance(field_value, datetime.datetime):
+                    field_value = field_value.strftime("%I.%M %p")
+
+                d.update({str(field_name): field_value})
             if d:
                 response.append(d)
         if response:
@@ -161,11 +167,12 @@ class VisitorView(BaseMapiView):
                                                       'No visitors for given workbook')
 
     @method_decorator(mapi_mandatory_parameters('name', 'mobile_no', 'from_place', 'destination_place',
-                                                'in_time', 'out_time', 'signature', 'wb_type'))
+                                                'in_time', 'out_time', 'wb_type'))
     def post(self, request):
 
         vehicle_no = request.POST.get('vehicle_no', '')
-        photo = request.POST.get('photo') # visitorImage, visitorSign
+        visitor_photo = request.POST.get('visitorImage') # visitorImage,
+        visitor_sign = request.POST.get('visitorSign')
         visitor = None
         in_time = request.POST['in_time']
         out_time = request.POST['out_time']
@@ -183,7 +190,7 @@ class VisitorView(BaseMapiView):
                                              in_time=in_time_datetime,
                                              out_time=out_time_datetime,
                                              vehicle_no=vehicle_no,
-                                             photo=photo)
+                                             photo=visitor_photo)
         except:
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
                                                       'Unable to create visitor!')
@@ -203,9 +210,6 @@ class VisitorView(BaseMapiView):
 class WorkBookView(BaseMapiView):
     def get(self, request):
         member = request.user
-        if not member:
-            return BaseMapiView.render_error_response(
-                MapiErrorCodes.LOGIN_REQUIRED, 'Please login for creating work-book')
 
         workbooks = WorkBook.objects.filter(member=member)
         if workbooks:
@@ -220,7 +224,9 @@ class WorkBookView(BaseMapiView):
         for workbook in workbooks:
             workbooks_list.append({
                 'wb_name': workbook.wb_name,
-                'wb_img_url': workbook.wb_icon
+                'wb_type_id': str(workbook.wb_type.id),
+                'wb_img_url': ''.join(
+                    [get_base_image_url(), workbook.wb_type.wb_icon.name]) if workbook.wb_type.wb_icon.name else '',
             })
         return BaseMapiView.render_to_response(workbooks_list)
 
@@ -240,7 +246,7 @@ class WorkBookView(BaseMapiView):
                 MapiErrorCodes.GENERIC_ERROR, 'Workbook type doesn\'t exits!')
 
         needed_fields = self.getValidVisitorMandatoryFields(request.POST['mandatory_fields'])
-        if needed_fields:
+        if not needed_fields:
             # In-case someone post invalid fields via postman client
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR, 'Entered fields are not valid!')
 
@@ -251,7 +257,7 @@ class WorkBookView(BaseMapiView):
         workbook = None
         try:
             workbook = WorkBook.objects.create(wb_name=request.POST['wb_name'],
-                                               type=workbook_type,
+                                               wb_type=workbook_type,
                                                member=member)
         except:
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
@@ -268,8 +274,6 @@ class WorkBookView(BaseMapiView):
         post_visitor_fields_list = post_visitor_fields.split(',')
         needed_fields = set(visitor_all_fields).intersection(post_visitor_fields_list)
         return needed_fields
-
-
 
     @csrf_exempt
     @method_decorator(mapi_authenticate(optional=False))
@@ -300,7 +304,7 @@ class WorkBookTypeView(BaseMapiView):
 
         rect_dict['wb_types'] = workbooks_type_list
 
-        rect_dict['visitor_fields'] = get_visitor_all_fields()
+        rect_dict['mandatory_fields'] = get_visitor_all_fields()
         return BaseMapiView.render_to_response(rect_dict)
 
     #@method_decorator(mapi_authenticate(optional=False))

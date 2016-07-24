@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -97,7 +97,7 @@ TEMPLATES = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -107,6 +107,11 @@ USE_TZ = True
 
 MOBILE_API = True
 MEDIA_FROM_S3 = False
+DOMAIN_NAME = 'http://192.168.1.9:8080'
+MEDIA_URL = '%s/media/' % DOMAIN_NAME  # s3 url check this when used
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')  # used in urls.py
+
+UPLOAD_DIR = MEDIA_URL  # Local image path
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = 'visitor_management'

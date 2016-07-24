@@ -1,2 +1,14 @@
 python manage.py makemigrations mapi
 python manage.py migrate
+
+
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+sudo pip install --upgrade google-api-python-client
+
+//Create bucket
+gsutil mb gs://your-bucket-name
+
+Project Id:  image-upload-test-1384
+
+https://cloud.google.com/storage/docs/quickstart-console

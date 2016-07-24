@@ -31,3 +31,9 @@ if settings.MOBILE_API:
     urlpatterns += [
         url(r'^mapi/', include('visitorManagement.mapi.urls')),
     ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(.*)/$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT})
+    ]
