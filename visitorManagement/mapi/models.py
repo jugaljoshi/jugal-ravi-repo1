@@ -99,28 +99,28 @@ class Visitor(models.Model):
     workbook = models.ForeignKey(WorkBook, null=False, blank=False) #editable=False
     member = models.ForeignKey(Member, null=True) # editable=False
 
-    # object = VisitorManager()
-    #
-    # @property
-    # def is_live(self):
-    #     current_datetime = timezone.now()
-    #     current_datetime.astimezone(timezone.utc).replace(tzinfo=None)
-    #     return self.in_time < current_datetime < self.out_time
-    #
-    # def save(self, force_insert=False, force_update=False, using=None):
-    #     super(Visitor, self).save(force_insert, force_update, using)
-    #     photo_file = self.photo.file
-    #     photo_file.seek(0)
-    #
-    #     signature_file = self.signature.file
-    #     signature_file.seek(0)
-    #
-    #     if getattr(settings, 'MEDIA_FROM_S3', None):
-    #         conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-    #         bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
-    #         key = Key(bucket)
-    #         save_image_to_s3(key, photo_file)
-    #         save_image_to_s3(key, signature_file)
+    object = VisitorManager()
+
+    @property
+    def is_live(self):
+        current_datetime = timezone.now()
+        current_datetime.astimezone(timezone.utc).replace(tzinfo=None)
+        return self.in_time < current_datetime < self.out_time
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        super(Visitor, self).save(force_insert, force_update, using)
+        photo_file = self.photo.file
+        photo_file.seek(0)
+
+        signature_file = self.signature.file
+        signature_file.seek(0)
+
+        if getattr(settings, 'MEDIA_FROM_S3', None):
+            conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+            bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+            key = Key(bucket)
+            save_image_to_s3(key, photo_file)
+            save_image_to_s3(key, signature_file)
 
 
 '''
