@@ -79,7 +79,7 @@ class VisitorManager(models.Manager):
             if field.model != self.model and field.model._meta.concrete_model == self.concrete_model:
                 continue
 
-            if field.name in ['workbook', 'id']:
+            if field.name in ['workbook', 'id', 'member']:
                 continue
             if hasattr(field, 'attname'):
                 names.append(field.attname)
@@ -87,39 +87,40 @@ class VisitorManager(models.Manager):
 
 
 class Visitor(models.Model):
-    name = models.CharField(max_length=100)
-    mobile_no = models.CharField(_("Mobile Number"), max_length=13)
+    name = models.CharField(max_length=100, db_index=True)
+    mobile_no = models.CharField(_("Mobile Number"), max_length=13, blank=True, null=True)
     vehicle_no = models.CharField(_("Vehicle Number"), max_length=20, blank=True, null=True)
-    from_place = models.CharField(max_length=50)
-    destination_place = models.CharField(max_length=50)
-    in_time = models.DateTimeField(editable=True) #editable=False
-    out_time = models.DateTimeField(editable=True)
+    from_place = models.CharField(max_length=50, blank=True, null=True)
+    destination_place = models.CharField(max_length=50, blank=True, null=True)
+    in_time = models.DateTimeField(editable=True, blank=True, null=True) #editable=False
+    out_time = models.DateTimeField(editable=True, blank=True, null=True)
     photo = models.ImageField(upload_to='uploads/member_photos', blank=True, null=True) # todo change to media/uploads
-    signature = models.ImageField(upload_to='uploads/signature_photos') # todo change to media/uploads
+    signature = models.ImageField(upload_to='uploads/signature_photos', blank=True, null=True) # todo change to media/uploads
     workbook = models.ForeignKey(WorkBook, null=False, blank=False) #editable=False
+    member = models.ForeignKey(Member, null=True) # editable=False
 
-    object = VisitorManager()
-
-    @property
-    def is_live(self):
-        current_datetime = timezone.now()
-        current_datetime.astimezone(timezone.utc).replace(tzinfo=None)
-        return self.in_time < current_datetime < self.out_time
-
-    def save(self, force_insert=False, force_update=False, using=None):
-        super(Visitor, self).save(force_insert, force_update, using)
-        photo_file = self.photo.file
-        photo_file.seek(0)
-
-        signature_file = self.signature.file
-        signature_file.seek(0)
-
-        if getattr(settings, 'MEDIA_FROM_S3', None):
-            conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-            bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
-            key = Key(bucket)
-            save_image_to_s3(key, photo_file)
-            save_image_to_s3(key, signature_file)
+    # object = VisitorManager()
+    #
+    # @property
+    # def is_live(self):
+    #     current_datetime = timezone.now()
+    #     current_datetime.astimezone(timezone.utc).replace(tzinfo=None)
+    #     return self.in_time < current_datetime < self.out_time
+    #
+    # def save(self, force_insert=False, force_update=False, using=None):
+    #     super(Visitor, self).save(force_insert, force_update, using)
+    #     photo_file = self.photo.file
+    #     photo_file.seek(0)
+    #
+    #     signature_file = self.signature.file
+    #     signature_file.seek(0)
+    #
+    #     if getattr(settings, 'MEDIA_FROM_S3', None):
+    #         conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    #         bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+    #         key = Key(bucket)
+    #         save_image_to_s3(key, photo_file)
+    #         save_image_to_s3(key, signature_file)
 
 
 '''

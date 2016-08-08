@@ -27,4 +27,7 @@ urlpatterns = [
 
     url(r'^v1.0.0/create-visitor/?$', VisitorView.as_view()),
     url(r'^v1.0.0/get-visitors/?$', VisitorView.as_view()),
+    url(r'^v1.0.0/get-visitors/?$', VisitorView.as_view()),
+
+    url(r'^v1.0.0/search-tc/?$', VisitorView.as_view()),
 ]

@@ -2,7 +2,8 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpRequest, HttpRe
 import simplejson
 import json
 from django.views.generic import View, TemplateView
-from visitorManagement.mapi.utils import MapiErrorCodes, JSONResponse, mapi_mandatory_parameters, get_visitor_all_fields, \
+from visitorManagement.mapi.utils import MapiErrorCodes, JSONResponse, mapi_mandatory_parameters, \
+    get_visitor_all_fields, \
     get_base_image_url
 from django.conf import settings
 import logging
@@ -11,7 +12,10 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from visitorManagement.mapi.request_handler import make_token, mapi_authenticate
 from django.shortcuts import get_list_or_404, get_object_or_404
+from PIL import Image
+import json
 import datetime
+
 
 class BaseMapiView(View):
     def __init__(self, **kwargs):
@@ -55,7 +59,6 @@ class BaseMapiView(View):
 
 
 class LoginView(BaseMapiView):
-
     def post(self, request):
 
         member = None
@@ -128,12 +131,13 @@ class VisitorView(BaseMapiView):
 
     TIME_FORMAT = '%Y%m%d %H:%M:%S'
 
-    @method_decorator(mapi_mandatory_parameters('wb_type_id'))
+    @method_decorator(mapi_mandatory_parameters('wb_id'))
     def get(self, request):
         member = request.user
-        #member = get_object_or_404(Member, id=1) # todo remove this
-
-        workbook_type = get_object_or_404(WorkBookType, id=request.GET['wb_type_id'])
+        # member = get_object_or_404(Member, id=1) # todo remove this
+        workbook = get_object_or_404(WorkBook, id=request.GET['wb_id'])
+        workbook_type = workbook.wb_type
+        #workbook_type = get_object_or_404(WorkBookType, id=request.GET['wb_id'])
         workbook_field_options = workbook_type.mandatory_fields
         workbook_field_options_list = workbook_field_options.split(',')
         workbook = get_object_or_404(WorkBook, member=member, wb_type=workbook_type)
@@ -157,6 +161,9 @@ class VisitorView(BaseMapiView):
                 if isinstance(field_value, datetime.datetime):
                     field_value = field_value.strftime("%I.%M %p")
 
+                if field_name in ['photo', 'signature'] and field_value:
+                    field_value = '%s%s' % (get_base_image_url(), field_value)
+
                 d.update({str(field_name): field_value})
             if d:
                 response.append(d)
@@ -166,35 +173,108 @@ class VisitorView(BaseMapiView):
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'No visitors for given workbook')
 
-    @method_decorator(mapi_mandatory_parameters('name', 'mobile_no', 'from_place', 'destination_place',
-                                                'in_time', 'out_time', 'wb_type'))
     def post(self, request):
+        params = request.POST.get('params')
+        if not params:
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      'Missing params in request')
+        params = json.loads(params)
+        wb_id = params.get('wb_id')
+        if not wb_id:
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      'Missing work book Id in request')
 
-        vehicle_no = request.POST.get('vehicle_no', '')
-        visitor_photo = request.POST.get('visitorImage') # visitorImage,
-        visitor_sign = request.POST.get('visitorSign')
-        visitor = None
-        in_time = request.POST['in_time']
-        out_time = request.POST['out_time']
+        workbook = get_object_or_404(WorkBook, id=wb_id)
+        workbook_type = workbook.wb_type
+        workbook_mandatory_fields = workbook_type.mandatory_fields
+        workbook_mandatory_fields_list = workbook_mandatory_fields.split(',')
+        visitor_field = Visitor.object.get_all_field_names()
+        needed_fields = set(visitor_field).intersection(workbook_mandatory_fields_list)
 
-        # todo upload image and signature data
+        if 'photo' in needed_fields and not request.FILES.get('photo'):
+            needed_fields.remove('photo')
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      "Missing field photo in request")
 
-        in_time_datetime = datetime.datetime.strptime(in_time, self.TIME_FORMAT)
-        out_time_datetime = datetime.datetime.strptime(out_time, self.TIME_FORMAT)
+        if 'signature' in needed_fields and not request.FILES.get('signature'):
+            needed_fields.remove('signature')
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      "Missing field signature in request")
+
+        '''
+        request_dict = request.__getattribute__(request.method)
+        for param in needed_fields:
+            if not request_dict.get(param, None):
+                return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                          "Missing field '%s' in request" % param)
+        '''
+
+        name = params.get('name')
+        mobile_no = params.get('mobile_no')
+        vehicle_no = params.get('vehicle_no')
+        from_place = params.get('from_place')
+        destination_place = params.get('destination_place')
+        from django.utils import timezone
+        in_time = params.get('in_time')
+        in_time_datetime = None
+        if in_time:
+            in_time_datetime = timezone.make_aware(datetime.datetime.strptime(in_time, self.TIME_FORMAT),
+                                                   timezone.get_default_timezone())
+            # in_time_datetime = datetime.datetime.strptime(in_time, self.TIME_FORMAT)
+
+        out_time = params.get('out_time')
+        out_time_datetime = None
+        if out_time:
+            out_time_datetime = timezone.make_aware(datetime.datetime.strptime(out_time, self.TIME_FORMAT),
+                                                    timezone.get_default_timezone())
+            # out_time_datetime = datetime.datetime.strptime(out_time, self.TIME_FORMAT)
+
+        photo = request.FILES.get('photo')
+        signature = request.FILES.get('signature')
+
+        import ipdb; ipdb.set_trace()
+        import time
+        time_stamp = time.time()
+        try:
+            if photo:
+                photo = Image.open(photo)
+                # photo.verify()
+                (width, height) = photo.size
+                if width > 125 or height > 125:
+                    photo = photo.resize((125, 125), Image.ANTIALIAS)
+                visitor_img_path = settings.MEDIA_ROOT + '/uploads/member_photos/' + str(time_stamp) + '_' + wb_id+'.png'
+                photo.save(visitor_img_path)
+
+            if signature:
+                signature = Image.open(signature)
+                # signature.verify()
+                (width, height) = signature.size
+                if width > 125 or height > 125:
+                    signature = signature.resize((125, 125), Image.ANTIALIAS)
+                signature_img_path = settings.MEDIA_ROOT + '/uploads/signature_photos/' + str(time_stamp) + '_' + wb_id+'.png'
+                signature.save(signature_img_path)
+
+        except IOError as e:
+            logging.error(e.message)
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      'Uploaded image not in correct format')
 
         try:
-            visitor = Visitor.objects.create(name=request.POST['name'],
-                                             mobile_no=request.POST['mobile_no'],
-                                             from_place=request.POST['from_place'],
-                                             destination_place=request.POST['destination_place'],
-                                             in_time=in_time_datetime,
-                                             out_time=out_time_datetime,
-                                             vehicle_no=vehicle_no,
-                                             photo=visitor_photo)
-        except:
+            visitor = Visitor.object.create(member=request.user,
+                                            workbook=workbook,
+                                            name=name,
+                                            mobile_no=mobile_no,
+                                            vehicle_no=vehicle_no,
+                                            from_place=from_place,
+                                            destination_place=destination_place,
+                                            in_time=in_time_datetime,
+                                            out_time=out_time_datetime,
+                                            photo='uploads/member_photos/' + str(time_stamp) + '_' + wb_id + '.png',
+                                            signature='uploads/signature_photos/' + str(time_stamp) + '_' + wb_id + '.png')
+        except Exception as e:
+            logging.error(e.message)
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
-                                                      'Unable to create visitor!')
-
+                                                      'Unable to create visitor, Please try again later.')
         if visitor:
             return BaseMapiView.render_to_response()
         else:
@@ -282,7 +362,6 @@ class WorkBookView(BaseMapiView):
 
 
 class WorkBookTypeView(BaseMapiView):
-
     def get(self, request):
         workbooks_types = WorkBookType.objects.filter()
 
@@ -307,6 +386,30 @@ class WorkBookTypeView(BaseMapiView):
         rect_dict['mandatory_fields'] = get_visitor_all_fields()
         return BaseMapiView.render_to_response(rect_dict)
 
-    #@method_decorator(mapi_authenticate(optional=False))
+    # @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(WorkBookTypeView, self).dispatch(request, *args, **kwargs)
+
+
+'''
+
+
+            # format = image.format
+            # s_img.save(os.path.join(s_dir,os.path.basename(infile)),"JPEG",quality=80,optimize=True,progressive=True)
+            # _file, ext = os.path.splitext(infile)
+'''
+
+
+class SearchView(BaseMapiView):
+
+    def get(self, request):
+        member = request.user
+        name = request.GET['name']
+        names = Visitor.object.filter(name__startswith=name, member=member)[:5]
+        return BaseMapiView.render_to_response({'names': names})
+
+
+    @method_decorator(mapi_mandatory_parameters('name'))
+    #@method_decorator(mapi_authenticate(optional=False))
+    def dispatch(self, request, *args, **kwargs):
+        return super(SearchView, self).dispatch(request, *args, **kwargs)
