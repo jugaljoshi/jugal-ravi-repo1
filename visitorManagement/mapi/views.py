@@ -145,7 +145,8 @@ class VisitorView(BaseMapiView):
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'Workbook does\'t exits for given type')
 
-        visitors = Visitor.object.get_all_active_visitor(workbook)
+        name = request.GET.get('name')  # this is optional field, used via search
+        visitors = Visitor.object.get_all_active_visitor(workbook, name=name)
 
         if not visitors:
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
@@ -201,13 +202,11 @@ class VisitorView(BaseMapiView):
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       "Missing field signature in request")
 
-        '''
         request_dict = request.__getattribute__(request.method)
         for param in needed_fields:
             if not request_dict.get(param, None):
                 return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                           "Missing field '%s' in request" % param)
-        '''
 
         name = params.get('name')
         mobile_no = params.get('mobile_no')
@@ -232,7 +231,6 @@ class VisitorView(BaseMapiView):
         photo = request.FILES.get('photo')
         signature = request.FILES.get('signature')
 
-        import ipdb; ipdb.set_trace()
         import time
         time_stamp = time.time()
         try:
@@ -304,7 +302,7 @@ class WorkBookView(BaseMapiView):
         for workbook in workbooks:
             workbooks_list.append({
                 'wb_name': workbook.wb_name,
-                'wb_type_id': str(workbook.wb_type.id),
+                'wb_id': str(workbook.id),
                 'wb_img_url': ''.join(
                     [get_base_image_url(), workbook.wb_type.wb_icon.name]) if workbook.wb_type.wb_icon.name else '',
             })
@@ -392,11 +390,9 @@ class WorkBookTypeView(BaseMapiView):
 
 
 '''
-
-
-            # format = image.format
-            # s_img.save(os.path.join(s_dir,os.path.basename(infile)),"JPEG",quality=80,optimize=True,progressive=True)
-            # _file, ext = os.path.splitext(infile)
+    # format = image.format
+    # s_img.save(os.path.join(s_dir,os.path.basename(infile)),"JPEG",quality=80,optimize=True,progressive=True)
+    # _file, ext = os.path.splitext(infile)
 '''
 
 
@@ -405,11 +401,12 @@ class SearchView(BaseMapiView):
     def get(self, request):
         member = request.user
         name = request.GET['name']
-        names = Visitor.object.filter(name__startswith=name, member=member)[:5]
-        return BaseMapiView.render_to_response({'names': names})
-
+        visitors = Visitor.object.filter(name__istartswith=name, member=member)
+        rect_dict = [{'wb_id': str(visitor.workbook.id), 'name': visitor.name}
+                     for visitor in visitors][:5]
+        return BaseMapiView.render_to_response(rect_dict)
 
     @method_decorator(mapi_mandatory_parameters('name'))
-    #@method_decorator(mapi_authenticate(optional=False))
+    @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(SearchView, self).dispatch(request, *args, **kwargs)

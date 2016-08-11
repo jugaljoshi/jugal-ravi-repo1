@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
-from visitorManagement.mapi.views import LoginView, RegistrationView, VisitorView, WorkBookView, WorkBookTypeView
+from visitorManagement.mapi.views import LoginView, RegistrationView, VisitorView, WorkBookView, WorkBookTypeView, \
+    SearchView
 
 '''
 urlpatterns = patterns('',
@@ -27,7 +28,6 @@ urlpatterns = [
 
     url(r'^v1.0.0/create-visitor/?$', VisitorView.as_view()),
     url(r'^v1.0.0/get-visitors/?$', VisitorView.as_view()),
-    url(r'^v1.0.0/get-visitors/?$', VisitorView.as_view()),
 
-    url(r'^v1.0.0/search-tc/?$', VisitorView.as_view()),
+    url(r'^v1.0.0/search-tc/?$', SearchView.as_view()),
 ]

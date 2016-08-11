@@ -51,6 +51,7 @@ class WorkBook(models.Model):
     def __unicode__(self):
         return '%s' % self.wb_name
 
+'''
     def save(self, force_insert=False, force_update=False, using=None):
         super(WorkBook, self).save(force_insert, force_update, using)
         icon_file = self.wb_icon.file
@@ -61,14 +62,16 @@ class WorkBook(models.Model):
             bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
             key = Key(bucket)
             save_image_to_s3(key, icon_file)
+'''
 
 
 class VisitorManager(models.Manager):
-    def get_all_active_visitor(self, workbook):
+    def get_all_active_visitor(self, workbook, name=None):
         current_datetime = timezone.now()
-        #current_datetime.astimezone(timezone.utc).replace(tzinfo=None)
-        return self.filter(workbook=workbook, in_time__lte=current_datetime,
-                           out_time__gte=current_datetime).values()
+        if name:
+            return self.filter(workbook=workbook, name=name).values()
+
+        return self.filter(workbook=workbook, in_time__lte=current_datetime,out_time__gte=current_datetime).values()
 
     def get_all_field_names(self):
         names = list()
