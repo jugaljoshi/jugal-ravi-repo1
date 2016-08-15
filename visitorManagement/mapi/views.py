@@ -15,6 +15,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from PIL import Image
 import json
 import datetime
+from copy import deepcopy
 
 
 class BaseMapiView(View):
@@ -156,8 +157,9 @@ class VisitorView(BaseMapiView):
         needed_fields = set(visitor_field).intersection(workbook_field_options_list)
         for visitor in visitors:
             d = dict()
-            while needed_fields:
-                field_name = needed_fields.pop()
+            temp_needed_fields = deepcopy(needed_fields)
+            while temp_needed_fields:
+                field_name = temp_needed_fields.pop()
                 field_value = visitor[field_name]
                 if isinstance(field_value, datetime.datetime):
                     field_value = field_value.strftime("%I.%M %p")
@@ -193,20 +195,20 @@ class VisitorView(BaseMapiView):
         needed_fields = set(visitor_field).intersection(workbook_mandatory_fields_list)
 
         if 'photo' in needed_fields and not request.FILES.get('photo'):
-            needed_fields.remove('photo')
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       "Missing field photo in request")
+        needed_fields.remove('photo')
 
         if 'signature' in needed_fields and not request.FILES.get('signature'):
-            needed_fields.remove('signature')
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       "Missing field signature in request")
+        needed_fields.remove('signature')
 
-        request_dict = request.__getattribute__(request.method)
-        for param in needed_fields:
-            if not request_dict.get(param, None):
+        #request_dict = request.__getattribute__(request.method)
+        for needed_field in needed_fields:
+            if not params.get(needed_field, None):
                 return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
-                                                          "Missing field '%s' in request" % param)
+                                                          "Missing field '%s' in request" % needed_field)
 
         name = params.get('name')
         mobile_no = params.get('mobile_no')
@@ -300,9 +302,15 @@ class WorkBookView(BaseMapiView):
     def generate_workbook_response(self, workbooks):
         workbooks_list = []
         for workbook in workbooks:
+            wb_mandatory_fields_string = workbook.wb_type.mandatory_fields
+            wb_mandatory_fields = []
+            if wb_mandatory_fields_string:
+                wb_mandatory_fields = wb_mandatory_fields_string.split(',')
+
             workbooks_list.append({
                 'wb_name': workbook.wb_name,
                 'wb_id': str(workbook.id),
+                'mandatory_fields': wb_mandatory_fields,
                 'wb_img_url': ''.join(
                     [get_base_image_url(), workbook.wb_type.wb_icon.name]) if workbook.wb_type.wb_icon.name else '',
             })
