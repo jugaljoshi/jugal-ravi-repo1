@@ -16,6 +16,7 @@ from PIL import Image
 import json
 import datetime
 from copy import deepcopy
+from django.utils import timezone
 
 
 class BaseMapiView(View):
@@ -162,7 +163,8 @@ class VisitorView(BaseMapiView):
                 field_name = temp_needed_fields.pop()
                 field_value = visitor[field_name]
                 if isinstance(field_value, datetime.datetime):
-                    field_value = field_value.strftime("%I.%M %p")
+                    #field_value = field_value.replace(tzinfo=timezone.get_default_timezone())
+                    field_value = field_value.strftime('%I.%M %p')#("%I.%M %p")
 
                 if field_name in ['photo', 'signature'] and field_value:
                     field_value = '%s%s' % (get_base_image_url(), field_value)
@@ -215,20 +217,24 @@ class VisitorView(BaseMapiView):
         vehicle_no = params.get('vehicle_no')
         from_place = params.get('from_place')
         destination_place = params.get('destination_place')
-        from django.utils import timezone
         in_time = params.get('in_time')
         in_time_datetime = None
+        # import ipdb; ipdb.set_trace()
         if in_time:
-            in_time_datetime = timezone.make_aware(datetime.datetime.strptime(in_time, self.TIME_FORMAT),
-                                                   timezone.get_default_timezone())
-            # in_time_datetime = datetime.datetime.strptime(in_time, self.TIME_FORMAT)
+            # in_time_datetime = timezone.make_aware(datetime.datetime.strptime(in_time, self.TIME_FORMAT),
+            #                                        timezone.get_default_timezone())
+            in_time_datetime = datetime.datetime.strptime(in_time, '%Y%m%d %H:%M:%S')
+            in_time_datetime.replace(tzinfo=None)
+            #in_time_datetime = in_time_datetime.strftime("%I:%M %p")
 
         out_time = params.get('out_time')
         out_time_datetime = None
         if out_time:
-            out_time_datetime = timezone.make_aware(datetime.datetime.strptime(out_time, self.TIME_FORMAT),
-                                                    timezone.get_default_timezone())
-            # out_time_datetime = datetime.datetime.strptime(out_time, self.TIME_FORMAT)
+            # out_time_datetime = timezone.make_aware(datetime.datetime.strptime(out_time, self.TIME_FORMAT),
+                #                                         timezone.get_default_timezone())
+            out_time_datetime = datetime.datetime.strptime(out_time, '%Y%m%d %H:%M:%S')
+            out_time_datetime.replace(tzinfo=None)
+            #out_time_datetime = out_time_datetime.strftime("%I:%M %p")
 
         photo = request.FILES.get('photo')
         signature = request.FILES.get('signature')

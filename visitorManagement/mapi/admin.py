@@ -21,7 +21,7 @@ class MemberAdmin(admin.ModelAdmin):
 class VisitorAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'mobile_no', 'vehicle_no', 'from_place',
                     'destination_place', 'in_time', 'out_time')
-    search_fields = ('id', 'name', 'email')
+    search_fields = ('id', 'name')
 
     def get_actions(self, request):
         actions = super(VisitorAdmin, self).get_actions(request)

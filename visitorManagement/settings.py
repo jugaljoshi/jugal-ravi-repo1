@@ -103,11 +103,11 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 MOBILE_API = True
 MEDIA_FROM_S3 = False
-DOMAIN_NAME = 'http://192.168.1.102:8080'
+DOMAIN_NAME = 'http://192.168.1.101:8080'
 MEDIA_URL = '%s/media/' % DOMAIN_NAME  # s3 url check this when used
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')  # used in urls.py
 
