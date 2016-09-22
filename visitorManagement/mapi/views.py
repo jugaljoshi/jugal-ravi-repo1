@@ -3,8 +3,7 @@ import simplejson
 import json
 from django.views.generic import View, TemplateView
 from visitorManagement.mapi.utils import MapiErrorCodes, JSONResponse, mapi_mandatory_parameters, \
-    get_visitor_all_fields, \
-    get_base_image_url
+    get_visitor_all_fields, get_base_image_url, format_visitor_data
 from django.conf import settings
 import logging
 from visitorManagement.mapi.models import Member, Visitor, WorkBookType, WorkBook
@@ -17,6 +16,7 @@ import json
 import datetime
 from copy import deepcopy
 from django.utils import timezone
+DATE_TIME_FORMAT = '%Y%m%d %H:%M:%S'
 
 
 class BaseMapiView(View):
@@ -131,7 +131,7 @@ class VisitorView(BaseMapiView):
     System.out.println(dateFormat.format(cal.getTime()));
     '''
 
-    TIME_FORMAT = '%Y%m%d %H:%M:%S'
+    DATE_TIME_FORMAT = '%Y%m%d %H:%M:%S'
 
     @method_decorator(mapi_mandatory_parameters('wb_id'))
     def get(self, request):
@@ -153,25 +153,10 @@ class VisitorView(BaseMapiView):
         if not visitors:
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'No visitors for given workbook')
-        response = []
+
         visitor_field = Visitor.object.get_all_field_names()  # get_visitor_all_fields()
         needed_fields = set(visitor_field).intersection(workbook_field_options_list)
-        for visitor in visitors:
-            d = dict()
-            temp_needed_fields = deepcopy(needed_fields)
-            while temp_needed_fields:
-                field_name = temp_needed_fields.pop()
-                field_value = visitor[field_name]
-                if isinstance(field_value, datetime.datetime):
-                    #field_value = field_value.replace(tzinfo=timezone.get_default_timezone())
-                    field_value = field_value.strftime('%I.%M %p')#("%I.%M %p")
-
-                if field_name in ['photo', 'signature'] and field_value:
-                    field_value = '%s%s' % (get_base_image_url(), field_value)
-
-                d.update({str(field_name): field_value})
-            if d:
-                response.append(d)
+        response = format_visitor_data(visitors, needed_fields)
         if response:
             return BaseMapiView.render_to_response(response)
         else:
@@ -410,7 +395,7 @@ class WorkBookTypeView(BaseMapiView):
 '''
 
 
-class SearchView(BaseMapiView):
+class SearchTermView(BaseMapiView):
 
     def get(self, request):
         member = request.user
@@ -422,5 +407,65 @@ class SearchView(BaseMapiView):
 
     @method_decorator(mapi_mandatory_parameters('name'))
     @method_decorator(mapi_authenticate(optional=False))
+    def dispatch(self, request, *args, **kwargs):
+        return super(SearchTermView, self).dispatch(request, *args, **kwargs)
+
+
+class SearchView(BaseMapiView):
+
+    def get(self, request):
+        member = request.user
+        # todo remove this
+
+        member = Member.objects.get(id=1)
+
+        get_kwargs = dict()
+        get_kwargs.update({'member': member})
+
+        name = request.GET.get('name')
+        if name:
+            get_kwargs.update({'name__contains': name})
+        mobile_no = request.GET.get('mobile_no')
+        if mobile_no:
+            get_kwargs.update({'mobile_no': mobile_no})
+        vehicle_no = request.GET.get('vehicle_no')
+        if vehicle_no:
+            get_kwargs.update({'vehicle_no': vehicle_no})
+        from_place = request.GET.get('from_place')
+        if from_place:
+            get_kwargs.update({'from_place': from_place})
+        destination_place = request.GET.get('destination_place')
+        if destination_place:
+            get_kwargs.update({'destination_place': destination_place})
+
+        in_time = request.GET.get('in_time')
+        in_time_datetime = None
+        if in_time:
+            in_time_datetime = datetime.datetime.strptime(in_time, '%d-%m-%Y %H:%M:%S')
+            in_time_datetime.replace(tzinfo=None)
+
+        out_time = request.GET.get('out_time')
+        out_time_datetime = None
+        if out_time:
+            out_time_datetime = datetime.datetime.strptime(out_time, '%d-%m-%Y %H:%M:%S')
+            out_time_datetime.replace(tzinfo=None)
+
+        # ExampleModel.objects.filter(some_datetime_field__range=[start, new_end]) //(today_min, today_max)
+        visitors = Visitor.object.filter(**get_kwargs)
+        if in_time_datetime:
+            visitors = visitors.filter(in_time__gte=in_time_datetime)
+        if out_time_datetime:
+            visitors = visitors.filter(out_time__lte=out_time_datetime)
+
+        visitors = visitors.values()
+        if visitors:
+            visitor_field = Visitor.object.get_all_field_names()
+            rect_dict = format_visitor_data(visitors, visitor_field)
+            return BaseMapiView.render_to_response(rect_dict)
+        else:
+            return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
+                                                      'No visitors for given workbook')
+
+    # @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(SearchView, self).dispatch(request, *args, **kwargs)

@@ -130,3 +130,26 @@ def get_base_image_url(protocol='http'):
     if not base_url.endswith("/"):
         base_url = "%s/" % base_url
     return base_url
+
+
+def format_visitor_data(visitors, needed_fields):
+    from copy import deepcopy
+    import datetime
+    rect_dict = []
+    for visitor in visitors:
+        d = dict()
+        temp_needed_fields = deepcopy(needed_fields)
+        while temp_needed_fields:
+            field_name = temp_needed_fields.pop()
+            field_value = visitor[field_name]
+            if isinstance(field_value, datetime.datetime):
+                #field_value = field_value.replace(tzinfo=timezone.get_default_timezone())
+                field_value = field_value.strftime('%I.%M %p')#("%I.%M %p")
+
+            if field_name in ['photo', 'signature'] and field_value:
+                field_value = '%s%s' % (get_base_image_url(), field_value)
+
+            d.update({str(field_name): field_value})
+        if d:
+            rect_dict.append(d)
+    return rect_dict
