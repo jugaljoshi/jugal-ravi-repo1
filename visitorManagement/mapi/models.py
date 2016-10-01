@@ -2,8 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from visitorManagement.mapi.utils import save_image_to_s3
-from boto.s3.connection import S3Connection
-from boto.s3.key import Key
+# from boto.s3.connection import S3Connection
+# from boto.s3.key import Key
 import datetime
 from django.utils import timezone
 import logging
@@ -118,13 +118,14 @@ class Visitor(models.Model):
         signature_file = self.signature.file
         signature_file.seek(0)
 
+        '''
         if getattr(settings, 'MEDIA_FROM_S3', None):
             conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
             bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
             key = Key(bucket)
             save_image_to_s3(key, photo_file)
             save_image_to_s3(key, signature_file)
-
+        '''
 
 '''
 class WorkBookTypeOptions():
