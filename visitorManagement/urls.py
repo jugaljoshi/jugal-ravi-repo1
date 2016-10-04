@@ -1,7 +1,8 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 admin.autodiscover()
 from django.conf import settings
+from django.views.static import serve
 
 admin.autodiscover()
 
@@ -34,6 +35,7 @@ if settings.MOBILE_API:
 
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^media/(.*)/$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT})
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
     ]

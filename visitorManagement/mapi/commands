@@ -12,3 +12,40 @@ gsutil mb gs://your-bucket-name
 Project Id:  image-upload-test-1384
 
 https://cloud.google.com/storage/docs/quickstart-console
+
+
+=====================================
+heroku create --buildpack heroku/python
+git push heroku master
+
+
+
+
+======================================
+
+
+
+Running Locally
+
+Make sure you have Python installed properly. Also, install the Heroku Toolbelt and Postgres.
+
+$ git clone git@github.com:heroku/python-getting-started.git
+$ cd python-getting-started
+
+$ pip install -r requirements.txt
+
+$ createdb python_getting_started
+
+$ python manage.py migrate
+$ python manage.py collectstatic
+
+$ heroku local
+
+Your app should now be running on localhost:5000.
+Deploying to Heroku
+
+$ heroku create
+$ git push heroku master
+
+$ heroku run python manage.py migrate
+$ heroku open

@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
-from visitorManagement.mapi.views import LoginView, RegistrationView, VisitorView, WorkBookView, WorkBookTypeView, \
+from django.conf.urls import url
+from visitorManagement.mapi.views import LoginView, VisitorView, WorkBookView, WorkBookTypeView, \
     SearchView, SearchTermView
 
 '''

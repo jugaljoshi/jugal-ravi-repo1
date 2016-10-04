@@ -2,73 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67905218-32d8-48c1-b7cc-b7898ac0c8fe" name="Default" comment="Search API integration">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470589876.46_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470590414.58_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470590548.8_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470590590.52_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470593811.68_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470596451.0_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470596464.82_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470598683.08_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470598774.64_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470600774.18_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1470602525.76_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1471184613.14_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1471189103.67_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1471189229.92_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1471269404.33_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1471351592.02_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472277246.75_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472278391.69_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472281755.15_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472283381.48_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472283429.71_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472283482.05_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472283756.55_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472285669.87_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472299758.25_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472980408.28_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472980446.22_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/1472980656.24_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/a_LAJSYAQ.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/abc.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/member_photos/jugal.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470590414.58_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470590548.8_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470590590.52_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470593811.68_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470596451.0_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470596464.82_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470598683.08_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470598774.64_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470600774.18_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1470602525.76_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1471184613.14_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1471189103.67_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1471189229.92_1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1471269404.33_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1471351592.02_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472277246.75_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472278391.69_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472281755.15_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472283381.48_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472283429.71_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472283482.05_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472283756.55_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472285669.87_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472299758.25_2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472980408.28_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472980446.22_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/1472980656.24_3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/signature_photos/a_J81d0KM.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/workbook_icon/a_PTAouEz.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/workbook_icon/room-service-297071_640.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/media/uploads/workbook_icon/room-service-297071_640_15ZLVn4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/requirement.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/mapi/migrations/0001_initial.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visitorManagement/mapi/migrations/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/requirement.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visitorManagement/mapi/models.py" afterPath="$PROJECT_DIR$/visitorManagement/mapi/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visitorManagement/mapi/commands" afterPath="$PROJECT_DIR$/visitorManagement/mapi/commands" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visitorManagement/mapi/urls.py" afterPath="$PROJECT_DIR$/visitorManagement/mapi/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visitorManagement/settings.py" afterPath="$PROJECT_DIR$/visitorManagement/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visitorManagement/urls.py" afterPath="$PROJECT_DIR$/visitorManagement/urls.py" />
     </list>
     <ignored path="VisitorManagement.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,49 +32,37 @@
         <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#96#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirement.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirement.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.225806">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="commands" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/commands">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/visitorManagement/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4898305">
+              <caret line="109" column="22" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visitorManagement/urls.py">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="20" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wsgi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visitorManagement/wsgi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -144,7 +71,7 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
               <folding>
                 <element signature="e#0#102#0" expanded="true" />
@@ -157,18 +84,16 @@
         <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
+              <caret line="1" column="52" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25760287">
+            <state vertical-scroll-proportion="0.0">
               <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -201,17 +126,17 @@
         <option value="$PROJECT_DIR$/VisitorManagement/urls.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/form.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/request_handler.py" />
-        <option value="$PROJECT_DIR$/visitorManagement/urls.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/migrations/UploadUtil.py" />
-        <option value="$PROJECT_DIR$/visitorManagement/mapi/commands" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/migrations/0001_initial.py" />
-        <option value="$PROJECT_DIR$/visitorManagement/settings.py" />
-        <option value="$PROJECT_DIR$/visitorManagement/mapi/urls.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/admin.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/views.py" />
-        <option value="$PROJECT_DIR$/requirement.txt" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/utils.py" />
         <option value="$PROJECT_DIR$/visitorManagement/mapi/models.py" />
+        <option value="$PROJECT_DIR$/visitorManagement/mapi/commands" />
+        <option value="$PROJECT_DIR$/requirement.txt" />
+        <option value="$PROJECT_DIR$/visitorManagement/urls.py" />
+        <option value="$PROJECT_DIR$/visitorManagement/mapi/urls.py" />
+        <option value="$PROJECT_DIR$/visitorManagement/settings.py" />
       </list>
     </option>
   </component>
@@ -246,7 +171,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,34 +217,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uploads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VisitorManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VisitorManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visitorManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="mapi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -484,7 +387,6 @@
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -494,6 +396,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -586,9 +489,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#96#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -638,9 +539,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#96#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -676,9 +575,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#96#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -805,13 +702,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/commands">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/bigbasket/local/lib/python2.7/site-packages/django/utils/timezone.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -840,47 +730,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/urls.py">
+    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#96#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirement.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.225806">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="20" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,13 +744,35 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visitorManagement/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.159322">
+          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="52" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0">
+        <state vertical-scroll-proportion="0.0">
           <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
           <folding>
             <element signature="e#0#102#0" expanded="true" />
@@ -902,13 +780,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/models.py">
+    <entry file="file://$PROJECT_DIR$/visitorManagement/mapi/commands">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25760287">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visitorManagement/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4898305">
+          <caret line="109" column="22" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>

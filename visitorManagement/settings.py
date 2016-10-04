@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))  # .decode('utf-8'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -67,10 +67,10 @@ WSGI_APPLICATION = 'visitorManagement.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        'NAME': 'visitor',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'jugaljoshi',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'jugal$visitor',                      # Or path to database file if using sqlite3.
+        'USER': 'jugal',                      # Not used with sqlite3.
+        'PASSWORD': 'mysqlpassword',                  # Not used with sqlite3.
+        'HOST': 'jugal.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
