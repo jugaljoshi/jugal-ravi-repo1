@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 
 import os
 import sys
-#sys.path.append('/Users/Sreek/django_demo/godjango/bookings')
 
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 

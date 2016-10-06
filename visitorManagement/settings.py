@@ -65,14 +65,24 @@ WSGI_APPLICATION = 'visitorManagement.wsgi.application'
 
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        'NAME': 'jugal$visitor',                      # Or path to database file if using sqlite3.
-        'USER': 'jugal',                      # Not used with sqlite3.
-        'PASSWORD': 'mysqlpassword',                  # Not used with sqlite3.
-        'HOST': 'jugal.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'visitor$visitorDB',                      # Or path to database file if using sqlite3.
+        'USER': 'visitor',                      # Not used with sqlite3.
+        'PASSWORD': 'jugaljoshi',                  # Not used with sqlite3.
+        'HOST': 'visitor.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    #     'NAME': 'jugal$visitor',                      # Or path to database file if using sqlite3.
+    #     'USER': 'jugal',                      # Not used with sqlite3.
+    #     'PASSWORD': 'jugaljoshi',                  # Not used with sqlite3.
+    #     'HOST': 'jugal.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
+    #     'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
+    # }
 
     # 'default': {
     #     'ENGINE': 'django.contrib.gis.db.backends.mysql',
@@ -128,3 +138,4 @@ AWS_STORAGE_BUCKET_NAME = 'visitor_management'
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
