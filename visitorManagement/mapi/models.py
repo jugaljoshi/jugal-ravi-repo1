@@ -11,7 +11,7 @@ import logging
 
 class Member(models.Model):
     email = models.EmailField(_('Email Address'), unique=True)
-    password = models.CharField(max_length=128, editable=False)
+    password = models.CharField(max_length=128)
     is_active = models.BooleanField(default=True)
     name = models.CharField(max_length=100)
     mobile_no = models.CharField(_("Mobile Number"), max_length=13)
