@@ -103,12 +103,13 @@ def render_error_response(mapi_error_code, message=None, response=None):
 
 def get_visitor_all_fields():
     from visitorManagement.mapi.models import Visitor
-    visitor_fields = Visitor._meta.get_all_field_names()
+    # visitor_fields = Visitor._meta.get_all_field_names() // below 1.8 django version
+    visitor_fields = Visitor.object.get_all_field_names()
 
     # remove foreign key fields
-    visitor_fields.remove('workbook')
-    visitor_fields.remove('workbook_id')
-    visitor_fields.remove('id')
+    # visitor_fields.remove('workbook')
+    # visitor_fields.remove('workbook_id')
+    # visitor_fields.remove('id')
     return visitor_fields
 
 

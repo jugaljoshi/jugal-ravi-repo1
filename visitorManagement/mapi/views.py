@@ -136,7 +136,6 @@ class VisitorView(BaseMapiView):
     @method_decorator(mapi_mandatory_parameters('wb_id'))
     def get(self, request):
         member = request.user
-        # member = get_object_or_404(Member, id=1) # todo remove this
         workbook = get_object_or_404(WorkBook, id=request.GET['wb_id'])
         workbook_type = workbook.wb_type
         #workbook_type = get_object_or_404(WorkBookType, id=request.GET['wb_id'])
@@ -283,12 +282,7 @@ class WorkBookView(BaseMapiView):
         member = request.user
 
         workbooks = WorkBook.objects.filter(member=member)
-        if workbooks:
-            return self.generate_workbook_response(workbooks)
-        else:
-            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
-                                                      'No Workbook available for member.'
-                                                      ' Please create one!')
+        return self.generate_workbook_response(workbooks)
 
     def generate_workbook_response(self, workbooks):
         workbooks_list = []
@@ -331,7 +325,10 @@ class WorkBookView(BaseMapiView):
         workbook_type.mandatory_fields = mandatory_fields
         workbook_type.save()
 
-        workbook = None
+        if WorkBook.objects.filter(wb_type=workbook_type, member=member).exists():
+            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
+                                                      'Selected workbook type already exits')
+
         try:
             workbook = WorkBook.objects.create(wb_name=request.POST['wb_name'],
                                                wb_type=workbook_type,
@@ -383,7 +380,7 @@ class WorkBookTypeView(BaseMapiView):
         rect_dict['mandatory_fields'] = get_visitor_all_fields()
         return BaseMapiView.render_to_response(rect_dict)
 
-    # @method_decorator(mapi_authenticate(optional=False))
+    @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(WorkBookTypeView, self).dispatch(request, *args, **kwargs)
 
@@ -415,9 +412,6 @@ class SearchView(BaseMapiView):
 
     def get(self, request):
         member = request.user
-        # todo remove this
-
-        member = Member.objects.get(id=1)
 
         get_kwargs = dict()
         get_kwargs.update({'member': member})
@@ -466,6 +460,6 @@ class SearchView(BaseMapiView):
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
                                                       'No visitors for given workbook')
 
-    # @method_decorator(mapi_authenticate(optional=False))
+    @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(SearchView, self).dispatch(request, *args, **kwargs)
