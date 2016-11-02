@@ -66,12 +66,15 @@ class WorkBook(models.Model):
 
 
 class VisitorManager(models.Manager):
-    def get_all_active_visitor(self, workbook, name=None):
+    def get_all_active_visitor(self, workbook, name=None, exclude_time=False):
         current_datetime = timezone.now()
-        if name:
-            return self.filter(workbook=workbook, name=name).values()
+        if name or exclude_time:
+            if name:
+                return self.filter(workbook=workbook, name=name).values()
+            if exclude_time:
+                return self.filter(workbook=workbook).values()
 
-        return self.filter(workbook=workbook, in_time__lte=current_datetime,out_time__gte=current_datetime).values()
+        return self.filter(workbook=workbook, in_time__lte=current_datetime, out_time__gte=current_datetime).values()
 
     def get_all_field_names(self):
         names = list()
@@ -112,11 +115,11 @@ class Visitor(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None):
         super(Visitor, self).save(force_insert, force_update, using)
-        photo_file = self.photo.file
-        photo_file.seek(0)
+        # photo_file = self.photo.file
+        # photo_file.seek(0)
 
-        signature_file = self.signature.file
-        signature_file.seek(0)
+        # signature_file = self.signature.file
+        # signature_file.seek(0)
 
         '''
         if getattr(settings, 'MEDIA_FROM_S3', None):

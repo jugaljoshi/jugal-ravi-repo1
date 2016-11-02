@@ -77,6 +77,15 @@ DATABASES = {
 
     # 'default': {
     #     'ENGINE': 'django.contrib.gis.db.backends.mysql',
+    #     'NAME': 'visitor$visitorDB',                      # Or path to database file if using sqlite3.
+    #     'USER': 'visitor',                      # Not used with sqlite3.
+    #     'PASSWORD': 'jugaljoshi',                  # Not used with sqlite3.
+    #     'HOST': 'visitor.mysql.pythonanywhere-services.com',                      # Set to empty string for localhost. Not used with sqlite3.
+    #     'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
+    # }
+
+    # 'default': {
+    #     'ENGINE': 'django.contrib.gis.db.backends.mysql',
     #     'NAME': 'jugal$visitor',                      # Or path to database file if using sqlite3.
     #     'USER': 'jugal',                      # Not used with sqlite3.
     #     'PASSWORD': 'jugaljoshi',                  # Not used with sqlite3.

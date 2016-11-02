@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from visitorManagement.mapi.views import LoginView, VisitorView, WorkBookView, WorkBookTypeView, \
-    SearchView, SearchTermView
+    SearchView, SearchTermView, CreateWorkBookTypeView
 
 '''
 urlpatterns = patterns('',
@@ -21,6 +21,7 @@ urlpatterns = [
     # Version 1.0.0 of the mobile API
     url(r'^v1.0.0/login/?$', LoginView.as_view()),
     url(r'^v1.0.0/get-workbook/?$', WorkBookView.as_view()),
+    url(r'^v1.0.0/create-workbook-type/?$', CreateWorkBookTypeView.as_view()),
     url(r'^v1.0.0/get-workbook-type/?$', WorkBookTypeView.as_view()),
     url(r'^v1.0.0/create-workbook/?$', WorkBookView.as_view()),
 

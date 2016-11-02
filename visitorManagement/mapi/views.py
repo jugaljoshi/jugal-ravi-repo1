@@ -147,7 +147,11 @@ class VisitorView(BaseMapiView):
                                                       'Workbook does\'t exits for given type')
 
         name = request.GET.get('name')  # this is optional field, used via search
-        visitors = Visitor.object.get_all_active_visitor(workbook, name=name)
+        exclude_time = False
+        if 'in_time' not in workbook_field_options_list or 'out_time' not in workbook_field_options_list:
+            exclude_time = True
+
+        visitors = Visitor.object.get_all_active_visitor(workbook, name=name, exclude_time=exclude_time)
 
         if not visitors:
             return BaseMapiView.render_error_response(MapiErrorCodes.NO_VISITOR_EXIT,
@@ -183,18 +187,19 @@ class VisitorView(BaseMapiView):
         if 'photo' in needed_fields and not request.FILES.get('photo'):
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       "Missing field photo in request")
-        needed_fields.remove('photo')
 
         if 'signature' in needed_fields and not request.FILES.get('signature'):
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       "Missing field signature in request")
-        needed_fields.remove('signature')
 
-        #request_dict = request.__getattribute__(request.method)
         for needed_field in needed_fields:
+
+            if needed_field in ['photo', 'signature']:
+                continue
+
             if not params.get(needed_field, None):
                 return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
-                                                          "Missing field '%s' in request" % needed_field)
+                                                          "Missing mandatory field in request")
 
         name = params.get('name')
         mobile_no = params.get('mobile_no')
@@ -203,7 +208,6 @@ class VisitorView(BaseMapiView):
         destination_place = params.get('destination_place')
         in_time = params.get('in_time')
         in_time_datetime = None
-        # import ipdb; ipdb.set_trace()
         if in_time:
             # in_time_datetime = timezone.make_aware(datetime.datetime.strptime(in_time, self.TIME_FORMAT),
             #                                        timezone.get_default_timezone())
@@ -230,8 +234,8 @@ class VisitorView(BaseMapiView):
                 photo = Image.open(photo)
                 # photo.verify()
                 (width, height) = photo.size
-                if width > 125 or height > 125:
-                    photo = photo.resize((125, 125), Image.ANTIALIAS)
+                if width > 200 or height > 200:
+                    photo = photo.resize((200, 200), Image.ANTIALIAS)
                 visitor_img_path = settings.MEDIA_ROOT + '/uploads/member_photos/' + str(time_stamp) + '_' + wb_id+'.png'
                 photo.save(visitor_img_path)
 
@@ -239,8 +243,8 @@ class VisitorView(BaseMapiView):
                 signature = Image.open(signature)
                 # signature.verify()
                 (width, height) = signature.size
-                if width > 125 or height > 125:
-                    signature = signature.resize((125, 125), Image.ANTIALIAS)
+                if width > 200 or height > 200:
+                    signature = signature.resize((200, 200), Image.ANTIALIAS)
                 signature_img_path = settings.MEDIA_ROOT + '/uploads/signature_photos/' + str(time_stamp) + '_' + wb_id+'.png'
                 signature.save(signature_img_path)
 
@@ -248,7 +252,6 @@ class VisitorView(BaseMapiView):
             logging.error(e.message)
             return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
                                                       'Uploaded image not in correct format')
-
         try:
             visitor = Visitor.object.create(member=request.user,
                                             workbook=workbook,
@@ -258,9 +261,14 @@ class VisitorView(BaseMapiView):
                                             from_place=from_place,
                                             destination_place=destination_place,
                                             in_time=in_time_datetime,
-                                            out_time=out_time_datetime,
-                                            photo='uploads/member_photos/' + str(time_stamp) + '_' + wb_id + '.png',
-                                            signature='uploads/signature_photos/' + str(time_stamp) + '_' + wb_id + '.png')
+                                            out_time=out_time_datetime)
+            if photo or signature:
+                if photo:
+                    visitor.photo = 'uploads/member_photos/' + str(time_stamp) + '_' + wb_id + '.png'
+                if signature:
+                    visitor.signature = 'uploads/signature_photos/' + str(time_stamp) + '_' + wb_id + '.png'
+                visitor.save()
+
         except Exception as e:
             logging.error(e.message)
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
@@ -321,13 +329,13 @@ class WorkBookView(BaseMapiView):
             # In-case someone post invalid fields via postman client
             return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR, 'Entered fields are not valid!')
 
+        if WorkBook.objects.filter(wb_type=workbook_type, member=member).exists():
+            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR, # todo return new error code
+                                                      'Selected workbook type already exits {0}'.format(workbook_type))
+
         mandatory_fields = ','.join(needed_fields)
         workbook_type.mandatory_fields = mandatory_fields
         workbook_type.save()
-
-        if WorkBook.objects.filter(wb_type=workbook_type, member=member).exists():
-            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
-                                                      'Selected workbook type already exits')
 
         try:
             workbook = WorkBook.objects.create(wb_name=request.POST['wb_name'],
@@ -366,6 +374,7 @@ class WorkBookTypeView(BaseMapiView):
                                                       'No workbook type configured, Please'
                                                       ' contact administrator!')
 
+    @classmethod
     def generate_workbook_type_response(self, workbooks_types):
         workbooks_type_list = []
         rect_dict = {}
@@ -415,7 +424,6 @@ class SearchView(BaseMapiView):
 
         get_kwargs = dict()
         get_kwargs.update({'member': member})
-
         name = request.GET.get('name')
         if name:
             get_kwargs.update({'name__contains': name})
@@ -463,3 +471,55 @@ class SearchView(BaseMapiView):
     @method_decorator(mapi_authenticate(optional=False))
     def dispatch(self, request, *args, **kwargs):
         return super(SearchView, self).dispatch(request, *args, **kwargs)
+
+
+class CreateWorkBookTypeView(BaseMapiView):
+
+    @method_decorator(mapi_mandatory_parameters('wb_type'))
+    def post(self, request):
+
+        workbook_type = WorkBookType.objects.filter(type=request.POST['wb_type'])
+        if workbook_type:
+            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR, 'Duplicate WorkBook type!')
+
+        workbook_type_slug = request.POST['wb_type']
+        wb_icon = None
+
+        '''
+        workbook_image = request.FILES.get('photo')
+        import time
+        time_stamp = time.time()
+        wb_icon = None
+        try:
+            if workbook_image:
+                photo = Image.open(workbook_image)
+                (width, height) = photo.size
+                if width > 125 or height > 125:
+                    photo = photo.resize((125, 125), Image.ANTIALIAS)
+
+                wb_icon = 'uploads/workbook_icon/' + str(time_stamp) + '_' + workbook_type_slug + '.png'
+                visitor_img_path = settings.MEDIA_ROOT + wb_icon
+                photo.save(visitor_img_path)
+        except IOError as e:
+            logging.error(e.message)
+            return BaseMapiView.render_error_response(MapiErrorCodes.INVALID_FIELD,
+                                                      'Uploaded workbook image not in correct format')
+        '''
+
+        try:
+            workbook_type = WorkBookType.objects.create(type=workbook_type_slug)
+        except Exception as e:
+            logging.error(e.message)
+            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
+                                                      'Unable to create workbook type, Please try again later.')
+        if workbook_type:
+            workbooks_types = WorkBookType.objects.filter()
+            return WorkBookTypeView.generate_workbook_type_response(workbooks_types)
+        else:
+            return BaseMapiView.render_error_response(MapiErrorCodes.GENERIC_ERROR,
+                                                      'Unable to create workbook type, Please try again later.')
+
+    @csrf_exempt
+    @method_decorator(mapi_authenticate(optional=False))
+    def dispatch(self, request, *args, **kwargs):
+        return super(CreateWorkBookTypeView, self).dispatch(request, *args, **kwargs)

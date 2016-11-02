@@ -144,8 +144,8 @@ def format_visitor_data(visitors, needed_fields):
             field_name = temp_needed_fields.pop()
             field_value = visitor[field_name]
             if isinstance(field_value, datetime.datetime):
-                #field_value = field_value.replace(tzinfo=timezone.get_default_timezone())
-                field_value = field_value.strftime('%I.%M %p')#("%I.%M %p")
+                # field_value = field_value.replace(tzinfo=timezone.get_default_timezone())
+                field_value = field_value.strftime('%I:%M %p')  # ("%I.%M %p")
 
             if field_name in ['photo', 'signature'] and field_value:
                 field_value = '%s%s' % (get_base_image_url(), field_value)
