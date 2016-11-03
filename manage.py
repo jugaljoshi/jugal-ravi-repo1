@@ -9,7 +9,8 @@ if __name__ == "__main__":
     sys.path.append(ROOT_DIR)
     sys.path.append(APP_DIR)
     app_basename = os.path.basename(APP_DIR)
-    os.environ['DJANGO_SETTINGS_MODULE'] = app_basename + '.settings'
+    # os.environ['DJANGO_SETTINGS_MODULE'] = app_basename + '.settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'visitorManagement' + '.settings'
     # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "visitorManagement.settings")
 
     from django.core.management import execute_from_command_line
